@@ -1,0 +1,84 @@
+%!TEX root=../main.tex
+
+
+\section {Bootstrapping the Ecosystem}
+
+In this section we present in chronological order several of the applications that have been added to the ecosystem during the recent years. Where appropriate we discuss lessons learned for the platform developer who hopes to become future ecosystem owner. 
+
+\subsection {The API, The App, and The Extension}
+The first milestone was releasing in 2013 a prototype version with three main components: 
+
+\begin{itemize}
+	\item One Reader Assistant implemented as a Chrome extension. It allows a learner to read any text on any website if they are using Chrome as a Browser\footnote{The extension is available at: \url{https://zeeguu.unibe.ch/chrome}}. 
+
+	\item An Initial User Model exposed via a REST API  \cite{Lung16zeeguu}. 
+
+	\item A web application\footnote{The web application is available at \url{https://zeeguu.unibe.ch}} responsible with account management, and a very basic interface to show a learner's reading history. 
+
+	\item One very simple trainer agent to be found inside of the web application which asks the learner to recognize a given word within its context. The words and contexts are selected from the past readings of the learner.
+
+\end{itemize}
+
+At the time, the web application, and the REST API were deployed together on the same serve as a Python-based applications and the separation between them was not well enforced. This came to hunt us later when we discovered that as we were extending the REST API for other applications, we duplicated functionality that was already existent in the Web Application since the Web Application was accessing the DB directly instead of going through the API.
+
+%One lesson that we learned based on this experience is that: 
+
+\Lesson {It is desirable to treat even the internal applications as one plans to treat future third-party applications. They represent a test case for functionality, and in the long run this will avoid duplicated code.}
+
+The Chrome extension as a reader assistant posed two main limitations: 
+	1) not everybody is reading his foreign language texts on their computer and,
+	2) some users are circumspect when it comes to installing third-party browser extensions.
+To address these problems, we decided to add new readers to the ecosystem.
+
+
+
+\subsection {A Reader for Android}
+
+The Zeeguu Reader for Android was implemented as a bachelor project by Schwab\cite{Schw16thesis}. The application is written in Java and functions as an RSS feed reader that relies on the Feedly API to manage user's reading interests.
+
+The architecture of the application made a clear distinction between two components: 
+
+\begin{enumerate}
+	\item The Zeeguu Android Library would ease the communication with the REST API and was released as a separate open-source component\footnote{\url{https://github.com/linusschwab/zeeguu-android-library}} and 
+	\item the actual Android  application. 
+\end{enumerate}
+
+The separation has proven to be a good design choice since a second Android application -- a Dictionary \cite{Gieh15a} which was implemented by another student could readily benefit from the API component.
+
+At the same time, the fact that the dictionary was a different application was also a problem. During usability studies we learned that at least some of the users found it inconvenient to have two applications installed. They would have preferred to have a single application instead. 
+
+\Lesson {When growing a software ecosystem, it pays to study whether fusing multiple applications in a single one could increase adoption.}
+
+One of the features of the Android News Reader was ranking news items based on their difficulty with respect to the current estimated knowledge of the learner. However, since such an algorithm would very likely be required for other applications in the ecosystem, we decided to move this functionality in a separate component on the server and expose it using an API. 
+
+\Lesson {In learning ecosystems, functionality that would benefit multiple applications, and especially that functionality which regards learner modeling, will tend to migrate towards a central point}
+
+The Android RSS Feed Reader relies on a third party API from Feedly to allow a reader to register to and track news feeds. This turned out to be very cumbersome for learners since they required to create a new account to a different service, before using the Reader Application.
+
+
+\subsection {A Reader for iOS}
+
+A news and blog reader for iOS devices has been implemented as a bachelor thesis by Oosterhof \cite{Oost16reading}. The application written natively in Swift eliminates the explicit dependence on third party services like Feedly. Instead the burden of extracting feed information from pages, and monitoring news in feeds has been moved into a separate agent inside of the User Model. Correspondingly the REST API grew with new functionality.
+
+The architecture of the iOS application, made again, as in the case of Android, a clear separation between a component which was to interact with the API\footnote{\url{https://github.com/mircealungu/zeeguu-ios-library}} and the actual GUI of the application. 
+
+For every new language the developer had to handwrite a new API interface that would communicate with the user model. This made us realize the missed opportunity of automatically generating the APIs for different languages. However, as far as we are aware, no such generator exists for the Python technology stack used. 
+
+\Lesson {Since adoption is eased by providing APIs in different languages, the platform developer should consider using technologies that enable the automatic generation of APIs for various languages.}
+
+
+\subsection {Smartwatch Trainer}
+
+According to current estimates, the wearable market\footnote{Which includes fitness trackers and smartwatches, so the number of smartwatches is likely smaller} will pass 111 million shipped devices in 2016, up from 80 million shipped in 2015. The ease with which a user can consult his smartwatch makes it an interesting platform for a learning strategy called micro-learning known for quickly closing skill and knowledge gaps  \cite{Dear12}. Having a trainer on the smartwatch would make it easy for the learner to take advantage of dead moments during the day (e.g. waiting for the elevator) and use them for learning.
+
+A trainer, dubbed {\em Time to Learn}, was implemented for the Gear S2 smartwatch by Haan and Nienhuis\cite{Nien16time}. The Gear S2 device runs on the Tizen mobile operating system and applications for it can be implemented using HTML5 and Javascript.
+
+To support micro-learning, the information on the smartwatch should be readily available when a learner looks at the watch. Thus, Time to Learn divides the watch face in two: the top half presents the usual watch information, while the bottom part represents a word recognition challenge for the learner. The word to be displayed is retrieved from the user model API recommendations. 
+
+After every challenge, the learner provides feedback on whether he knew a given word or not. This feedback is sent back to the user model so it can be used in the future by the knowledge estimator. 
+
+What we discovered was that, on the server, the knowledge estimation module has to take into account the existence of the smartwatch events explicitly. This forces the knowledge estimator module to be aware of the individual applications in the ecosystem, or at least of some of them -- in our case, the trainer agents. Theoretically, if the knowledge estimator would be fully implemented with machine learning technologies, it could be agnostic about the existence of the indiviudal trainers. However, this direction needs to be explored further.
+
+\Lesson {As long as a core component in a learning ecosystem needs to take decisions based on differentiating individual signals from different applications, it is impossible to hide from it the existence of different types of applications.}
+
+
