@@ -11,6 +11,8 @@ Figure \ref{fig:architecture} presents a very simplified version of the Zeeguu p
 	% \centering
 	\includegraphics[width=\linewidth]{images/zeeguu-architecture.pdf}
 	\caption{A very high-level view of the architecture of the Zeeguu ecosystem}
+	\ml{to rename the things here to Reader / Trainer - Applications. }
+
 	\label{fig:architecture}
 \end{figure}
 
@@ -26,6 +28,7 @@ Figure \ref{fig:architecture} presents a very simplified version of the Zeeguu p
 		% User Model Database
 		% User Model Registry
 		% User Model Store
+		% User Profile Repository -- this would be better since... 
 		is a core component of the learning ecosystem since it stores and orchestrates the exchange of information about the current and historical knowledge of the user. It needs to have several components, including: 
 
 		\begin{itemize}
@@ -35,6 +38,7 @@ Figure \ref{fig:architecture} presents a very simplified version of the Zeeguu p
 			\item The {\bf Knowledge Estimator} tries to approximate the current knowledge of the user based on the interaction history, and the feedback received from the Trainer agents, and other types of information that are available about the user
 
 			\item The {\bf Oracle} is an agent which decides what are the most important items to be studied next by the learner. 
+			\ml{could be talking about -- items to be encountered... not studied. the way in which the items will then later be encountered depends on the }
 			% We envision multiple oracle implementations competing with each other
 
 		\end{itemize}
