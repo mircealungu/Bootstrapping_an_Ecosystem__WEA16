@@ -19,32 +19,40 @@ Figure \ref{fig:architecture} presents a very simplified version of the Zeeguu p
 
 \begin{itemize}
 	
-	\item {\bf Reader Assistants} 
+	\item {\bf Reader Applications} 
 	support reading any kinds of materials in foreign languages. The reader applications must have two properties in common: 
 		1) they should make it very convenient for the user to obtain translations for the texts he encounters in the foreign language. 
-		2) they should track every event that provides a hint to the current user knowledge. In particular, every word that is being translated by the user indicates his lack of knowledge with respect to that particular word, and every word that is not being translate by the user indicates their knowledge of that word. 
+		2) they should report back to the server every event that provides a hint to the current user knowledge. In particular, every word that is being translated by the user indicates his lack of knowledge with respect to that particular word, and every word that is not being translate by the user indicates their knowledge of that word.
 	
-		\item {\bf User Model Store} 
+		\item {\bf Trainer Applications} support the learner in practicing the vocabulary and must interact with the user model. A trainer application can request from the user model store information on which words are to be learned by the learner. But a trainer application must also provide back to the central user model information about how well the learner behaves with respect to a given word, otherwise this information will be lost. 
+
+
+		\item {\bf User Profile Store} 
 		% User Model Database
 		% User Model Registry
 		% User Model Store
-		% User Profile Repository -- this would be better since... 
+		% User Profile Store -- this would be better since... 
 		is a core component of the learning ecosystem since it stores and orchestrates the exchange of information about the current and historical knowledge of the user. It needs to have several components, including: 
+
+		\newcommand {\archiblock}[1]{\item {\bf #1}}
 
 		\begin{itemize}
 
-			\item The {\bf Interaction Historian} represents a centralized data warehouse that stores all the interactions of a learner with texts in the foreign language that are mediated by the Reader applications.
+			\archiblock{The Translator} is a service which provides translations to the reader applications. It provides translations between many pairs of languages. It notifies the historian of every request it receives. 
 
-			\item The {\bf Knowledge Estimator} tries to approximate the current knowledge of the user based on the interaction history, and the feedback received from the Trainer agents, and other types of information that are available about the user
+			\archiblock{The Historian} is a data warehouse that sits at the core of a monitoring ecosystem. It records as much data as possible about all the interactions of a user with knowledge. 
+			% all the interactions of a learner with texts in the foreign language that are mediated by the Reader applications.
 
-			\item The {\bf Oracle} is an agent which decides what are the most important items to be studied next by the learner. 
-			\ml{could be talking about -- items to be encountered... not studied. the way in which the items will then later be encountered depends on the }
-			% We envision multiple oracle implementations competing with each other
+			\archiblock{The Oracle} is a machine learning based agent that {\em estimates the current knowledge of the learner} based on the information received from the Historian. It decides what are the most likely items that must be studied by the learner. 
+
+
+			\archiblock {The Librarian} is a web crawler that uses natural language processing techniques together with the information from the Oracle to support its goal of {\em providing recommendations to the learners} about which materials to study which are at the appropriate difficulty level as well as interesting enough for the learner.
+
+			\archiblock {The Motivator} is an agent that uses gamification techniques to keep the learner motivated. It uses information from the Historian to be able to report on a learners engagement. It uses information from the Oracle to be able to provide feedback on the actual learning progress. 
 
 		\end{itemize}
 
 
-	\item {\bf Trainer Agents} support the learner in practicing the vocabulary and must interact with the user model. A trainer application can request from the user model store information on which words are to be learned by the learner. But a trainer application must also provide back to the central user model information about how well the learner behaves with respect to a given word, otherwise this information will be lost. 
 	
 	% Two types of trainer agents are: 
 	% \begin{itemize}
