@@ -12,3 +12,6 @@ pdf:
 clean:
 	latexmk -C
 
+view:
+	evince main.pdf &
+
