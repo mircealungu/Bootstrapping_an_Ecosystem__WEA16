@@ -24,14 +24,13 @@ The figure presents only one type of actors, the language learners. The applicat
 
 \end{itemize}
 
-
-
 The Zeeguu Platform is the core component of the learning ecosystem since it stores and orchestrates the exchange of information about the current and historical knowledge of the user. It needs to have several components, including: 
 
 \newcommand {\archiblock}[1]{\item {\bf #1}}
 \begin{itemize}
 
 		\archiblock{The Translator} is a service which provides translations to the reader applications. It provides translations between many pairs of languages. It notifies the historian of every request it receives. 
+		The translator uses adaptive strategies to choose between different backends that have different values of cost and quality.
 
 		\archiblock{The Historian} is a data warehouse that sits at the core of a monitoring ecosystem. It records as much data as possible about all the interactions of a user with knowledge. 
 		% all the interactions of a learner with texts in the foreign language that are mediated by the Reader applications.
