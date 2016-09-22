@@ -40,7 +40,7 @@ In truth, this circumspection is well founded since a browser extension has acce
 
 \subsection {Adding a Reader for Android}
 
-The Zeeguu Reader for Android was implemented as a bachelor project by Schwab\cite{Schw16thesis}. The application is written in Java and functions as an RSS feed reader. The architecture of the application made a clear distinction between two components: 
+The Zeeguu Reader for Android was implemented as a bachelor project by Schwab \cite{Schw16thesis}. The application is written in Java and functions as an RSS feed reader. The architecture of the application made a clear distinction between two components: 
 
 \begin{enumerate}
 	\item The Zeeguu Android Library would ease the communication with the REST API and was released as a separate open-source component\footnote{\url{https://github.com/linusschwab/zeeguu-android-library}} and 
@@ -80,11 +80,12 @@ According to current estimates, the wearable market\footnote{Which includes fitn
 
 A trainer, dubbed {\em Time to Learn}, was implemented for the Gear S2 smartwatch by Haan and Nienhuis\cite{Nien16time}. The Gear S2 device runs on the Tizen mobile operating system and applications for it can be implemented using HTML5 and Javascript.
 
-To support micro-learning, the information on the smartwatch should be readily available when a learner looks at the watch. Thus, Time to Learn divides the watch face in two: the top half presents the usual watch information, while the bottom part represents a word recognition challenge for the learner. The word to be displayed is retrieved from the user model API recommendations. 
+To support micro-learning, the information on the smartwatch should be readily available when a learner looks at the watch. Thus, Time to Learn divides the watch face in two: the top half presents the usual watch information, while the bottom part represents a word recognition challenge for the learner. The word to be displayed is retrieved from the Oracle recommendation. 
 
-After every challenge, the learner provides feedback on whether he knew a given word or not. This feedback is sent back to the user model so it can be used in the future by the knowledge estimator. 
+After every challenge, the learner provides feedback on whether he knew a given word or not. This feedback is sent back to the Historian so it can be used in the future by the Oracle.
+wle
 
-What we discovered was that, on the server, the knowledge estimation module has to take into account the existence of the smartwatch events explicitly. This forces the knowledge estimator module to be aware of the individual applications in the ecosystem, or at least of some of them -- in our case, the trainer agents. Theoretically, if the knowledge estimator would be fully implemented with machine learning technologies, it could be agnostic about the existence of the indiviudal trainers. However, this direction needs to be explored further.
+What we discovered was that, on the server, the Oracle has to take into account the existence of the smartwatch events explicitly. This forces the Oracle to be aware of the individual applications in the ecosystem, or at least of some of them -- in our case, the trainer applications. Theoretically, if the Oracle would be fully implemented with machine learning technologies, it could be agnostic about the existence of the indiviudal trainers. However, this direction needs to be explored further.
 
 \Question {Is it possible to let new applications join a monitoring ecosystem without having a central component that is aware of the existence of the individual applications?} 
 
