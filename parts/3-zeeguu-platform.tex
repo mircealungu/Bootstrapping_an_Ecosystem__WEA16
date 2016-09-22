@@ -11,9 +11,9 @@ In this section we present a very high level architecture of a prototype of such
 	\label{fig:architecture}
 \end{figure}
 
-The figure presents only one type of actors, the language learners. The applicatoin developers are the ones who are building the main components with which the learners interact: 
+The figure presents explicitly only one category of actors -- the {\em language learners}. A second type of actor in the ecosystem are the {\em applicatoin developers} who build the applications with which the learners interact. There are two types of such applications: 
 
-\begin{itemize}
+\begin{description}
 	
 	\item {\bf Reader Applications} 
 	support reading any kinds of materials in foreign languages. The reader applications must have two properties in common: 
@@ -22,31 +22,34 @@ The figure presents only one type of actors, the language learners. The applicat
 	
 		\item {\bf Trainer Applications} support the learner in practicing the vocabulary and must interact with the user model. A trainer application can request from the user model store information on which words are to be learned by the learner. But a trainer application must also provide back to the central user model information about how well the learner behaves with respect to a given word, otherwise this information will be lost. 
 
-\end{itemize}
+\end{description}
+
+Note that as the Figure \ref{fig:architecture} subtly suggests by overlapping the two corresponding blocks, the Reader and the Trainer applications need not be disjoint applications, but one application could provide both functionalities.
+
 
 The Zeeguu Platform is the core component of the learning ecosystem since it stores and orchestrates the exchange of information about the current and historical knowledge of the user. It needs to have several components, including: 
 
 \newcommand {\archiblock}[1]{\item {\bf #1}}
-\begin{itemize}
+\begin{enumerate}
 
 		\archiblock{The Translator} is a service which provides translations to the reader applications. It provides translations between many pairs of languages. It notifies the historian of every request it receives. 
-		The translator uses adaptive strategies to choose between different backends that have different values of cost and quality.
+		The translator uses adaptive strategies to choose between different backends that have different properties in terms of cost and quality.
 
 		\archiblock{The Historian} is a data warehouse that sits at the core of a monitoring ecosystem. It records as much data as possible about all the interactions of a user with knowledge. 
 		% all the interactions of a learner with texts in the foreign language that are mediated by the Reader applications.
 
 		\archiblock{The Oracle} is a machine learning based agent that {\em estimates the current knowledge of the learner} based on the information received from the Historian. It decides what are the most likely items that must be studied by the learner. 
+		%
+		\archiblock{The Prioritizer} is a data mining focused component which aims at ordering the information to be learned based on a global view of its importance. It can be built based on statistical analysis of the learning patterns of the various leaners or based on a generic study of corpora in the target language.
 
 
 		\archiblock {The Librarian} is a web crawler that uses natural language processing techniques together with the information from the Oracle to support its goal of {\em providing recommendations to the learners} about which materials to study which are at the appropriate difficulty level as well as interesting enough for the learner.
 
 		\archiblock {The Motivator} is an agent that uses gamification techniques to keep the learner motivated. It uses information from the Historian to be able to report on a learners engagement. It uses information from the Oracle to be able to provide feedback on the actual learning progress. 
 
-\end{itemize}
+\end{enumerate}
 
-Note that as the Figure \ref{fig:architecture} suggests, the Reader Assistants and Trainer Agents need not be disjoint applications, but one application could provide both.
 
-It might appear intuitive for the reader that the more contexts in which the reader is supported by applications from the ecosystem, the better the knowledge model of that learner that can be built, and the better the user experience. Such a learning ecosystem can thus present a network effect where its value will increase more than linear with the number of applications that contribute to it.
 
 % Somewhere, we still have to discuss the question of: 
 % - How are we going to maintain this ecosystem? who will provide the data storage and translation facilities for the long run? 
