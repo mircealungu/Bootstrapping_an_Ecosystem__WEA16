@@ -15,9 +15,9 @@ The first milestone was releasing in 2013 a prototype version with three main co
 
 	\item An Initial User Model exposed via a REST API  \cite{Lung16zeeguu}. 
 
-	\item A web application\footnote{The web application is available at \url{https://zeeguu.unibe.ch}} responsible with account management, and a very basic interface to show a learner's reading history. 
+	\item A basic Web Profile application\footnote{The web application is available at \url{https://zeeguu.unibe.ch}} that provides account management, and a simple interface to show the reading history of a learner. 
 
-	\item One very simple trainer agent to be found inside of the web application which asks the learner to recognize a given word within its context. The words and contexts are selected from the past readings of the learner.
+	\item One very simple trainer agent to be found inside of the web profile which asks the learner to recognize a given word within its context. The words and contexts are selected from the past readings of the learner.
 
 \end{itemize}
 
@@ -25,7 +25,9 @@ At the time, the web application, and the REST API were deployed together on the
 
 %One lesson that we learned based on this experience is that: 
 
-\Lesson {It is desirable to treat even the internal applications as one plans to treat future third-party applications. They represent a test case for functionality, and in the long run this will avoid duplicated code.}
+\Question {Is it desirable to treat even the internal applications as one plans to treat future third-party applications? 
+% They represent a test case for functionality, and in the long run this will avoid duplicated code.
+}
 
 The Chrome extension as a reader assistant posed two main limitations: 
 	1) not everybody is reading his foreign language texts on their computer and,
@@ -50,11 +52,11 @@ The separation has proven to be a good design choice since a second Android appl
 
 At the same time, the fact that the dictionary was a different application was also a problem. During usability studies we learned that at least some of the users found it inconvenient to have two applications installed. They would have preferred to have a single application instead. 
 
-\Lesson {When growing a software ecosystem, it pays to study whether fusing multiple applications in a single one could increase adoption.}
+\Question {When is it better for an ecosystem to fuse multiple applications into a single one?}
 
 One of the features of the Android News Reader was ranking news items based on their difficulty with respect to the current estimated knowledge of the learner. However, since such an algorithm would very likely be required for other applications in the ecosystem, we decided to move this functionality in a separate component on the server and expose it using an API. 
 
-\Lesson {In learning ecosystems, functionality that would benefit multiple applications, and especially that functionality which regards learner modeling, will tend to migrate towards a central point}
+\Question {Does functionality that regards learner modeling tend to migrate towards a central point in a monitoring ecosystem?}
 
 The Android RSS Feed Reader relies on a third party API from Feedly to allow a reader to register to and track news feeds. This turned out to be very cumbersome for learners since they required to create a new account to a different service, before using the Reader Application.
 
@@ -67,7 +69,7 @@ The architecture of the iOS application, made again, as in the case of Android, 
 
 For every new language the developer had to handwrite a new API interface that would communicate with the user model. This made us realize the missed opportunity of automatically generating the APIs for different languages. However, as far as we are aware, no such generator exists for the Python technology stack used. 
 
-\Lesson {Since adoption is eased by providing APIs in different languages, the platform developer should consider using technologies that enable the automatic generation of APIs for various languages.}
+\Question {Would the use of technologies that enable the automatic generation of APIs increase the adoption by lowering the barrrier of entry to the ecosystem?}
 
 
 \subsection {Smartwatch Trainer}
@@ -82,6 +84,6 @@ After every challenge, the learner provides feedback on whether he knew a given 
 
 What we discovered was that, on the server, the knowledge estimation module has to take into account the existence of the smartwatch events explicitly. This forces the knowledge estimator module to be aware of the individual applications in the ecosystem, or at least of some of them -- in our case, the trainer agents. Theoretically, if the knowledge estimator would be fully implemented with machine learning technologies, it could be agnostic about the existence of the indiviudal trainers. However, this direction needs to be explored further.
 
-\Lesson {As long as a core component in a learning ecosystem needs to take decisions based on differentiating individual signals from different applications, it is impossible to hide from it the existence of different types of applications.}
+\Question {Is it possible to let new applications join a monitoring ecosystem without having a central component that is aware of the existence of the individual applications?} 
 
 
