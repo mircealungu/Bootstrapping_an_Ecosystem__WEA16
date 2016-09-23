@@ -3,16 +3,16 @@
 
 \section {Bootstrapping the Ecosystem}
 
-To help bootstrap the ecosystem, it was decided to build several of its key components in order to obtain a {\em minimal viable ecosystem}. This section presents, in a quasi chronological order, several of the milestones in the ecosystem evolution over the recent years. 
+In order to obtain a {\em minimal viable ecosystem} several of its key components must be in place. This section presents in a quasi chronological order several milestones in the evolution of the  ecosystem over the recent years. 
 % Where appropriate questions that might be interesting for further research are emphasized in the text.
 
 \subsection {A Minimal Viable Ecosystem}
-The first milestone was releasing a prototype version of our ecosystem with four main components: 
+The first milestone was releasing four main components of the ecosystem: 
 
 \begin{itemize}
 	\item One {\em reader application} implemented as a Chrome extension. It allows a learner to read any text and obtain in-place translations on any website as long as it is visited within the Chrome Browser\footnote{Available at: \url{https://zeeguu.unibe.ch/chrome}}. 
 
-	\item An initial version of the Zeeguu platform, containing the Historian, a Translator that relies on external services, and a very basic version of the Oracle, exposed via a REST API  \cite{Lung16zeeguu}. 
+	\item An initial version of the Zeeguu platform, containing the Historian, a Translator that relies on external services, and a very basic version of the Oracle, exposed via a REST API. \cite{Lung16zeeguu}. 
 
 	\item A basic {\em Web Profile} application\footnote{The web application is available at \url{https://zeeguu.unibe.ch}} that provides account management, and a simple interface to present the reading history of a learner. 
 
@@ -20,7 +20,7 @@ The first milestone was releasing a prototype version of our ecosystem with four
 
 \end{itemize}
 
-The web application and the REST API were deployed together on the same server as Python-based applications and the separation between them was not well enforced. This came to hunt us later when we discovered that as we were extending the REST API for other applications, we duplicated functionality that was already existent in the Web Application.
+The web application and the REST API were deployed together on the same server as Python-based applications and the separation between them was not well enforced. This came to hunt us later when we discovered that as we were extending the REST API for other applications, we were duplicating functionality already existent in the web profile application.
  % since the Web Application was accessing the DB directly instead of going through the API.
 
 %One lesson that we learned based on this experience is that: 
@@ -32,43 +32,44 @@ The web application and the REST API were deployed together on the same server a
 The Chrome extension as a reader application posed two main limitations: 
 	1) not everybody is reading his foreign language texts on their computer and,
 	2) some users are circumspect when it comes to installing third-party browser extensions. 
-In truth, this circumspection is well founded since a browser extension has access to all the information on the pages the user visits. In our case, we made our extension be active only on those pages where the user explicitly activates it. However, the only way a user can be sure of this is reading the code. And although the code is open-source, this is not a realistic request from a language learner. A first question about privacy in a monitoring ecosystem emerges: 
+In truth, this circumspection is well founded since a browser extension has access to all the information on the pages the user visits. 
 
-\Question {How can a monitoring ecosystem ensure and prove to its users that individual applications do not have access to more data than they are allowed access to?}
+In our case, we made our extension be active only on those pages where the user explicitly activates it. However, the only way a user can be completely confident that no information is leaking is reading the code. And although the code is open-source, this is not a realistic request from a language learner. A first question about privacy in a monitoring ecosystem emerges: 
+
+\Question {Can a monitoring ecosystem ensure and prove to its users that individual applications do not have access to more data than they are allowed to?}
 % TODO: could ask a question about -- how do you prove that a chrome extension does not track more data than it is supposed to?
 
 
 \subsection {Adding a Reader for Android}
 
-The Zeeguu Reader for Android was implemented as a bachelor project by Schwab \cite{Schw16thesis}. The application is written in Java and functions as an RSS feed reader. The architecture of the application made a clear distinction between two components: 
+The Zeeguu Reader for Android was implemented as a bachelor project by Schwab \cite{Schw16thesis}. The application is written in Java and functions as an RSS feed reader. The architecture of the application makes a clear distinction between: 
 
 \begin{enumerate}
-	\item The Zeeguu Android Library would ease the communication with the REST API and was released as a separate open-source component\footnote{\url{https://github.com/linusschwab/zeeguu-android-library}} and 
-	\item the actual Android  application. 
+	\item The {\em Zeeguu Android Library}\footnote{\url{https://github.com/linusschwab/zeeguu-android-library}} which eases the communication with the REST API and is released as a separate open-source component, and 
+	\item The actual reader application which focuses on the usability of offering textual translations in context
 \end{enumerate}
 
-The separation has proven to be a good design choice since a second Android application -- a Dictionary \cite{Gieh15a} which was implemented by another student could readily benefit from the API component.
+The separation has proven to be a good choice since a second Android application -- a Dictionary implemented by Giehl \cite{Gieh15a} could readily benefit from the API component.
 
-At the same time, the fact that the dictionary was a different application was also a problem. During usability studies we learned that at least some of the users found it inconvenient to have two applications installed. They would have preferred to have a single application instead. 
+During usability studies, however, we learned that a subset of the test users found it inconvenient to have both the Reader and the Dictionary applications installed. They would have preferred a single application. This raises another open question:
 
-\Question {When is it better for an ecosystem to fuse multiple applications into a single one?}
+\Question {When is it better to fuse multiple applications into a single one?}
 
+One of the features of the Android Reader application was ranking news items based on their difficulty with respect to the current estimated knowledge of the learner. Since such an algorithm would very likely be required for other applications in the ecosystem, we decided to move this functionality in a separate component on the server (the Librarian) and expose it using an API. 
 
-One of the features of the Android News Reader was ranking news items based on their difficulty with respect to the current estimated knowledge of the learner. However, since such an algorithm would very likely be required for other applications in the ecosystem, we decided to move this functionality in a separate component on the server (the Librarian) and expose it using an API. 
-
-\Question {Does learner modeling functionality tend to migrate towards a central point in an ecosystem?}
-
-The Android Reader relies on Feedly, a third party API, to track news feeds. This turned out to be very cumbersome for learners since they required to create a new account to a different service, before using the application.
-
+The Android Reader relies on Feedly, a third party API, to track news feeds. This turned out to be very cumbersome for learners since they required to create a new account to a different service, before using the application. This problem was solved in the case of the iOS reader.
 
 \subsection {Adding a Reader for iOS}
 
-Oosterhof \cite{Oost16reading} implemented a news and blog reader for iOS. The application written natively in Swift eliminates the explicit dependence on third party services like Feedly. Instead the burden of extracting feed information from pages, and monitoring news in feeds has been moved into a separate agent inside of the platform. 
+
+Oosterhof \cite{Oost16reading} implemented a reader for iOS. The application written natively in Swift eliminates the explicit dependence on third party services like Feedly. Instead the burden of extracting feed information from pages, and monitoring a users preferred feeds has been moved into a separate agent inside of the platform. Since also the Librarian was migrated to the platform from an app, a question is raised:
+
+\Question {Do learner modeling components tend to migrate towards the platform in a monitoring ecosystem?}
+
 % Correspondingly the REST API grew with new functionality.
 
-The architecture of the iOS application, made again, as in the case of Android, a clear separation between a component which was to interact with the API\footnote{\url{https://github.com/mircealungu/zeeguu-ios-library}} and the actual GUI of the application. 
-
-Since for every new language the developer handwrites a new API interface that communicates with the core services one question is raised:
+The architecture of the iOS application made again a clear separation between a component which was to interact with the API\footnote{\url{https://github.com/mircealungu/zeeguu-ios-library}} and the actual GUI of the application. Since for every new language the developer must handwrite a new API interface to  communicate with the core services, we ask: 
+ % one question is raised:
 % . This made us realize the missed opportunity of automatically generating the APIs for different languages. However, as far as we are aware, no such generator exists for the Python technology stack used. 
 
 \Question {Would the use of technologies that enable the automatic generation of APIs increase the adoption by lowering the barrrier of entry to the ecosystem?}
@@ -76,16 +77,20 @@ Since for every new language the developer handwrites a new API interface that c
 
 \subsection {Adding a Smartwatch Trainer}
 
-According to current estimates, the wearable market\footnote{Which includes fitness trackers and smartwatches, so the number of smartwatches is likely smaller} will pass 111 million shipped devices in 2016, up from 80 million shipped in 2015. The ease with which a user can consult his smartwatch makes it an interesting platform for a learning strategy called micro-learning known for quickly closing skill and knowledge gaps  \cite{Dear12}. Having a trainer on the smartwatch would make it easy for the learner to take advantage of dead moments during the day (e.g. waiting for the barista to prepare a cappuccino) and use them for learning.
+According to current estimates, the wearable market\footnote{Which includes fitness trackers and smartwatches, so the number of smartwatches is likely smaller} will pass 111 million shipped devices in 2016, up from 80 million shipped in 2015. 
 
-A trainer, dubbed {\em Time to Learn}, was implemented for the Gear S2 smartwatch by Haan and Nienhuis\cite{Nien16time}. The Gear S2 device runs on the Tizen mobile operating system and applications for it can be implemented using HTML5 and Javascript.
+The ease with which a user can consult his smartwatch makes it an interesting platform for a learning strategy called {\em micro-learning} known for quickly closing skill and knowledge gaps  \cite{Dear12}. Having a trainer on the smartwatch would make it easy for the learner to take advantage of and study during dead moments of the day (e.g. waiting for the barista to prepare a cappuccino).
 
-To support micro-learning, the information on the smartwatch should be readily available when a learner looks at the watch. Thus, Time to Learn divides the watch face in two: the top half presents the usual watch information, while the bottom part represents a word recognition challenge for the learner. The word to be displayed is retrieved from the Oracle recommendation. 
+A trainer, dubbed {\em Time to Learn}, was implemented for the Gear S2 smartwatch by Haan and Nienhuis\cite{Nien16time}. The Gear S2 device runs on the Tizen mobile operating system and applications for it are written using HTML5 and Javascript.
+
+To support micro-learning, the information on the smartwatch should be readily available when a learner looks at the watch. Thus, Time to Learn is implemented as a watch face which is divided in two: the top half presents the usual watch information, while the bottom part represents a word recognition challenge for the learner. The word to be displayed is selected based on an Oracle recommendation. 
 
 After every challenge, the learner provides feedback on whether he knew a given word or not. This feedback is sent back to the Historian so it can be used in the future by the Oracle.
-wle
 
-What we discovered was that, on the server, the Oracle has to take into account the existence of the smartwatch events explicitly. This forces the Oracle to be aware of the individual applications in the ecosystem, or at least of some of them -- in our case, the trainer applications. Theoretically, if the Oracle would be fully implemented with machine learning technologies, it could be agnostic about the existence of the indiviudal trainers. However, this direction needs to be explored further.
+
+On the platform, the Oracle has to take into account the existence of the smartwatch events explicitly and treat them in a different way than the events from the web based trainer. 
+% This forces the Oracle to be aware of the individual applications in the ecosystem, or at least of some of them -- in our case, the trainer applications. 
+Theoretically, the Oracle could be implemented with machine learning technologies, in such a way as to be agnostic about the existence of the indiviudal trainers. However, this direction needs to be explored further.
 
 \Question {Is it possible to let new applications join a monitoring ecosystem without having a central component that is aware of the existence of the individual applications?} 
 
