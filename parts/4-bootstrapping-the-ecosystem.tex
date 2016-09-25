@@ -4,7 +4,8 @@
 \section {Bootstrapping the Ecosystem}
 
 In order to obtain a {\em minimal viable ecosystem} several of its key components must be in place. This section presents in a quasi chronological order several milestones in the evolution of the  ecosystem over the recent years. 
-% Where appropriate questions that might be interesting for further research are emphasized in the text.
+
+In each of the subsections, we take the chance to step back and highlight one or several open questions that we think might be faced by future builders of such monitoring ecosystems. 
 
 \subsection {A Minimal Viable Ecosystem}
 The first milestone was releasing four main components of the ecosystem: 
@@ -20,12 +21,7 @@ The first milestone was releasing four main components of the ecosystem:
 
 \end{itemize}
 
-The web application and the REST API were deployed together on the same server as Python-based applications and the separation between them was not well enforced. This came to hunt us later when we discovered that as we were extending the REST API for other applications, we were duplicating functionality already existent in the web profile application.
- % since the Web Application was accessing the DB directly instead of going through the API.
-
-%One lesson that we learned based on this experience is that: 
-
-\Question {Is it desirable to treat internal applications as one plans to treat future third-party applications? Or taking on a little technical debt is acceptable in the bootstrapping phase?
+The web application and the REST API were deployed together on the same server as Python-based applications and the separation between them was not well enforced. This came to hunt us later when we discovered that as we were extending the REST API for other applications, we were duplicating functionality already existent in the web profile application. Surely a little technical debt can speed up the initial bootstrapping phase, but we think that it would have been better to treat internal applications as future third-party applications already from the begining.  
 % They represent a test case for functionality, and in the long run this will avoid duplicated code.
 }
 
@@ -62,9 +58,9 @@ The Android Reader relies on Feedly, a third party API, to track news feeds. Thi
 \subsection {Adding a Reader for iOS}
 
 
-Oosterhof \cite{Oost16reading} implemented a reader for iOS. The application written natively in Swift eliminates the explicit dependence on third party services like Feedly. Instead the burden of extracting feed information from pages, and monitoring a users preferred feeds has been moved into a separate agent inside of the platform. Since also the Librarian was migrated to the platform from an app, a question is raised:
+Oosterhof \cite{Oost16reading} implemented a reader for iOS. The application written natively in Swift eliminates the explicit dependence on third party services like Feedly. Instead the burden of extracting feed information from pages and monitoring a users preferred feeds has been moved into a separate agent inside of the platform. We discussed earlier how the Librarian was also migrated to the platform from an app. This illustrates our assumption that having all the information about a learner stored in a single central place simplifies data processing and user modeling. However, a more distributed design cold also be investigated.
 
-\Question {Do learner modeling components tend to migrate towards the platform in a monitoring ecosystem?}
+% \Question {Do learner modeling components tend to migrate towards the platform in a monitoring ecosystem?}
 
 % Correspondingly the REST API grew with new functionality.
 
