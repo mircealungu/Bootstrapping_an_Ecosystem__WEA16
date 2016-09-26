@@ -19,9 +19,9 @@ The figure presents explicitly only one category of actors -- the {\em language 
 		1) the usability of obtaining translations for unknown words in foreign language texts should be high (this is a quality attribute); 
 		2) they should report back to the platform information that could be used to infer the current user knowledge (this is a functional requirement).\footnote{e.g., the words that are being looked up, the context of these words, the time spent reading an article, etc.} 
 
-		% In particular, every word that is being translated by the user indicates his lack of knowledge with respect to that particular word, and every word that is not being translated by the user indicates their potential knowledge of that word. The context in which a word has been encountered is also useful. 
-	
-		\item {\bf Trainer Applications} provide exercises to accelerate the retention of individual words. Trainer applications have in common two functional properties: (1) they must request from the platform information on which words are prioritary to be studied and (2) they must provide back to the platform information about how well the learner behaved with respect to a given word\footnote{e.g., the correctness of an answer, the time to answer, etc.}.
+	\item {\bf Trainer Applications} provide exercises to accelerate the retention of individual words. Trainer applications have in common two functional properties: 
+		1) they must request from the platform information on which words are prioritary to be studied and 
+		2) they must provide back to the platform information about how well the learner behaved with respect to a given word\footnote{e.g., the correctness of an answer, the time to answer, etc.}.
 
 \end{description}
 
@@ -39,16 +39,15 @@ The Zeeguu Platform is the core component of the learning ecosystem since it sto
 		\archiblock{The Translator} is a service that provides translations between many pairs of languages to reader applications. It notifies the historian of every request it receives. 
 		It uses adaptive strategies to choose between different backends that have different properties in terms of cost and quality.
 
-		% all the interactions of a learner with texts in the foreign language that are mediated by the Reader applications.		%
 		\archiblock{The Prioritizer} is a data mining focused component which aims at {\em ranking the information in the domain} based on a global view of its relative importance. It can be built based on statistical analysis of the learning patterns of the various leaners or based on a generic study of corpora in the target language.
 
 		\archiblock{The Oracle} is a machine learning based agent that {\em estimates the current knowledge of the learner} based on user-specific information received from the Historian and language-specific information received from the Prioritizer. It decides what are the most likely items that must be studied by the learner. 
 
 % TODO: Re-read since this is completely refactored
-		\archiblock {The Librarian} {\em provides recommendations to the learners} about which materials are at the appropriate difficulty level but also interesting for the learner based on their personal preferences. It is implemented as a web crawler that uses natural language processing techniques but personalizes its results based on  information from the Oracle.
+		\archiblock {The Librarian} {\em provides reading recommendations wich are interesting to the learners while at the same being at the appropriate difficulty level}. It is implemented as a web crawler that uses natural language processing techniques but personalizes its results based on  information from the Oracle.
 
 		% TODO: reference on gamificatoin? 
-		\archiblock {The Motivator} is an agent that uses gamification techniques to keep the learner motivated. It uses information from the Historian to be able to report on a learners {\em engagement}. It uses information from the Oracle to be able to provide feedback on the actual {\em vocabulary acquisition } progress. 
+		\archiblock {The Motivator} is an agent that {\em uses gamification techniques to provide feedback that would keep the learner motivated}. It uses information 1) from the Historian to report on a learners {\em engagement} and 2) from the Oracle to provide feedback on the actual vocabulary acquisition v{\em progress}. 
 
 \end{enumerate}
 

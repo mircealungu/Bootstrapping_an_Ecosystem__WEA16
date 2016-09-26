@@ -3,9 +3,7 @@
 
 \section {Bootstrapping the Ecosystem}
 
-In order to obtain a {\em minimal viable ecosystem} several of its key components must be in place. This section presents in a quasi chronological order several milestones in the evolution of the  ecosystem over the recent years. 
-
-In each of the subsections, we take the chance to step back and highlight one or several open questions that we think might be faced by future builders of such monitoring ecosystems. 
+In order to obtain a {\em minimal viable ecosystem} several of its key components must be in place. This section presents in a quasi chronological order several milestones in the evolution of the  ecosystem over the recent years. Where appropriate we take the chance to step back and highlight general open questions that might be faced by future builders of monitoring ecosystems. 
 
 \subsection {A Minimal Viable Ecosystem}
 The first milestone was releasing four main components of the ecosystem: 
@@ -23,7 +21,7 @@ The first milestone was releasing four main components of the ecosystem:
 
 The web application and the REST API were deployed together on the same server as Python-based applications and the separation between them was not well enforced. This came to hunt us later when we discovered that as we were extending the REST API for other applications, we were duplicating functionality already existent in the web profile application. Surely a little technical debt can speed up the initial bootstrapping phase, but we think that it would have been better to treat internal applications as future third-party applications already from the begining.  
 % They represent a test case for functionality, and in the long run this will avoid duplicated code.
-}
+
 
 The Chrome extension as a reader application posed two main limitations: 
 	1) not everybody is reading his foreign language texts on their computer and,
@@ -86,7 +84,7 @@ After every challenge, the learner provides feedback on whether he knew a given 
 
 On the platform, the Oracle has to take into account the existence of the smartwatch events explicitly and treat them in a different way than the events from the web based trainer. 
 % This forces the Oracle to be aware of the individual applications in the ecosystem, or at least of some of them -- in our case, the trainer applications. 
-Theoretically, the Oracle could be implemented with machine learning technologies, in such a way as to be agnostic about the existence of the indiviudal trainers. However, this direction needs to be explored further.
+Theoretically, the Oracle could be implemented with machine learning technologies, in such a way as to be agnostic about the existence of the indiviudal trainers. However, this direction needs to be explored further. This leads us to raising a question about the {\em openess} principle (from Section 2): 
 
 \Question {Is it possible to let new applications join a monitoring ecosystem without having a central component that is aware of the existence of the individual applications?} 
 
