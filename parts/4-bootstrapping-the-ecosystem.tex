@@ -47,7 +47,7 @@ The separation has proven to be a good choice since a second Android application
 
 During usability studies, however, we learned that a subset of the test users found it inconvenient to have both the Reader and the Dictionary applications installed. They would have preferred a single application. This raises another open question:
 
-\Question {When is it better to fuse multiple applications into a single one?}
+\Question {When is it better to fuse multiple applications into a single one and how to balance the convenience of a single application with the scalability of dedicated applications?}
 
 One of the features of the Android Reader application was ranking news items based on their difficulty with respect to the current estimated knowledge of the learner. Since such an algorithm would very likely be required for other applications in the ecosystem, we decided to move this functionality in a separate component on the server (the Librarian) and expose it using an API. 
 
@@ -56,17 +56,15 @@ The Android Reader relies on Feedly, a third party API, to track news feeds. Thi
 \subsection {Adding a Reader for iOS}
 
 
-Oosterhof \cite{Oost16reading} implemented a reader for iOS. The application written natively in Swift eliminates the explicit dependence on third party services like Feedly. Instead the burden of extracting feed information from pages and monitoring a users preferred feeds has been moved into a separate agent inside of the platform. We discussed earlier how the Librarian was also migrated to the platform from an app. This illustrates our assumption that having all the information about a learner stored in a single central place simplifies data processing and user modeling. However, a more distributed design cold also be investigated.
+Oosterhof \cite{Oost16reading} implemented a reader for iOS. The application written natively in Swift eliminates the explicit dependence on third party services like Feedly. Instead the burden of extracting feed information from pages and monitoring a users preferred feeds has been moved into a separate agent inside of the platform. We discussed earlier how the Librarian was also migrated to the platform from an app. This illustrates our assumption that having all the information about a learner stored in a single central place simplifies data processing and user modeling. However, a more distributed design cold also be investigated. Which brings us to the question: 
 
-% \Question {Do learner modeling components tend to migrate towards the platform in a monitoring ecosystem?}
+\Question {Is it practical to have the learner modeling information distributed across applications  or is the centralization of the learner model the dominant strategy in a monitoring ecosystem?}
 
 % Correspondingly the REST API grew with new functionality.
 
-The architecture of the iOS application made again a clear separation between a component which was to interact with the API\footnote{\url{https://github.com/mircealungu/zeeguu-ios-library}} and the actual GUI of the application. Since for every new language the developer must handwrite a new API interface to  communicate with the core services, we ask: 
- % one question is raised:
-% . This made us realize the missed opportunity of automatically generating the APIs for different languages. However, as far as we are aware, no such generator exists for the Python technology stack used. 
+The architecture of the iOS application made again a clear separation between a component which was to interact with the API\footnote{\url{https://github.com/mircealungu/zeeguu-ios-library}} and the actual GUI of the application. Since for every new language the developer must handwrite a new API interface to  communicate with the core services, we realized that we missed the opportunity of automatically generating the APIs for different languages. However, as far as we are aware, no such generator exists for the Python technology stack used. 
 
-\Question {Would the use of technologies that enable the automatic generation of APIs increase the adoption by lowering the barrrier of entry to the ecosystem?}
+% \Question {Would the use of technologies that enable the automatic generation of APIs increase the adoption by lowering the barrrier of entry to the ecosystem?}
 
 
 \subsection {Adding a Smartwatch Trainer}
