@@ -8,8 +8,8 @@ In order to obtain a {\em minimal viable ecosystem} several of its key component
 \subsection {A Minimal Viable Ecosystem}
 The first milestone was releasing four main components of the ecosystem: 
 
-\begin{itemize}
-	\item One {\em reader application} implemented as a Chrome extension. It allows a learner to read any text and obtain in-place translations on any website as long as it is visited within the Chrome Browser\footnote{Available at: \url{https://zeeguu.unibe.ch/chrome}}. 
+\begin{enumerate}
+	\item A {\em reader application} implemented as a Chrome extension. It allows a learner to read any text and obtain in-place translations on any website as long as it is visited within the Chrome Browser\footnote{Available at: \url{https://zeeguu.unibe.ch/chrome}}. 
 
 	\item An initial version of the Zeeguu platform, containing the Historian, a Translator that relies on external services, and a very basic version of the Oracle, exposed via a REST API. \cite{Lung16zeeguu}. 
 
@@ -17,7 +17,7 @@ The first milestone was releasing four main components of the ecosystem:
 
 	\item One very simple {\em trainer application} which asks the learner to recognize a given word within its context. The words and contexts are selected from the past readings of the learner.
 
-\end{itemize}
+\end{enumerate}
 
 The web application and the REST API were deployed together on the same server as Python-based applications and the separation between them was not well enforced. This came to hunt us later when we discovered that as we were extending the REST API for other applications, we were duplicating functionality already existent in the web profile application. Surely a little technical debt can speed up the initial bootstrapping phase, but we think that it would have been better to treat internal applications as future third-party applications already from the begining.  
 % They represent a test case for functionality, and in the long run this will avoid duplicated code.
