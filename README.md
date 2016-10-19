@@ -1,12 +1,15 @@
 Repository for the [Bootstrapping an Ubiquitous Monitoring Ecosystem](preprint.pdf) paper 
 
-!Preprint
+Preprint
+========
 [HERE!](preprint.pdf)
 
-!About
+About
+=====
 The paper was presented at the [WEA workshop](http://wea.github.io) in 2016. The Workshop was collocated with the European Conference on Software Architectures. 
 
-!Compiling
+Compiling
+=========
 
 make sure to run `make install` 
 
